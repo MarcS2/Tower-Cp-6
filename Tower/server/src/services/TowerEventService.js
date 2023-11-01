@@ -12,15 +12,17 @@ class TowerEventService {
     return towerEvent
 
   }
-  async getTowerEvents(query) {
-    const towerEvents = await dbContext.TowerEvent.find({ type: query })
+  // { type: query }
+  async getTowerEvents() {
+    const towerEvents = await dbContext.TowerEvent.find().populate('creator')
 
     return towerEvents
   }
 
 
   async getTowerEventById(eventId) {
-    const event = await dbContext.TowerEvent.findById(eventId)
+    const event = await (await dbContext.TowerEvent.findById(eventId))
+    await event.populate('creator')
     if (!event) {
       throw new BadRequest(`${eventId} is not a valid id`)
     }

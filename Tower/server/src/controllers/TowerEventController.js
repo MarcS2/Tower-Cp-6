@@ -48,8 +48,8 @@ export class TowerEventController extends BaseController {
 
   async getTowerEvents(req, res, next) {
     try {
-      const query = req.query
-      const event = await towerEventService.getTowerEvents(query)
+      // const query = req.query
+      const event = await towerEventService.getTowerEvents()
       return res.send(event)
     } catch (error) {
       next(error)
