@@ -14,7 +14,9 @@ class TowerEventService {
   }
   // { type: query }
   async getTowerEvents() {
-    const towerEvents = await dbContext.TowerEvent.find().populate('creator')
+    const towerEvents = await dbContext.TowerEvent.find()
+      .populate('creator')
+      .populate('ticketCount')
 
     return towerEvents
   }
@@ -23,6 +25,7 @@ class TowerEventService {
   async getTowerEventById(eventId) {
     const event = await (await dbContext.TowerEvent.findById(eventId))
     await event.populate('creator')
+    await event.populate('ticketCount')
     if (!event) {
       throw new BadRequest(`${eventId} is not a valid id`)
     }
@@ -33,6 +36,7 @@ class TowerEventService {
   async createTowerEvent(eventData) {
     const towerEvent = await dbContext.TowerEvent.create(eventData)
     await towerEvent.populate('creator')
+    await towerEvent.populate('ticketCount')
     return towerEvent
   }
 

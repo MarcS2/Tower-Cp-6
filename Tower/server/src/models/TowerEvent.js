@@ -26,12 +26,12 @@ TowerEventSchema.virtual('creator', {
 })
 
 
-
-// default: 'misc'
-
-// TowerEventSchema.virtual('ticketCount', {
-//   localField:
-// })
+TowerEventSchema.virtual('ticketCount', {
+  localField: '_id',
+  foreignField: 'eventId',
+  ref: 'Ticket',
+  count: true
+})
 
 
 
