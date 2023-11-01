@@ -9,8 +9,16 @@ async getEvents() {
   logger.log('[EventsService] getEvents(), got events', res.data)
   const newEvent = res.data.map(eventPojo => new TowerEvent(eventPojo))
   AppState.towerEvent = newEvent
-  logger.log('[AppState]getEvents, events in AppState', AppState.towerEvents)
 }
+
+
+async getEventById(eventId) {
+  AppState.activeEvent = null
+  const res = await api.get(`api/events/${eventId}`)
+  AppState.activeEvent = new TowerEvent(res.data)
+  
+}
+
 
 }
 
