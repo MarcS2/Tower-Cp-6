@@ -12,8 +12,9 @@ class TowerEventService {
     return towerEvent
 
   }
-  async getTowerEvents() {
-    const towerEvents = await dbContext.TowerEvent.find()
+  async getTowerEvents(query) {
+    const towerEvents = await dbContext.TowerEvent.find({ type: query })
+
     return towerEvents
   }
 
