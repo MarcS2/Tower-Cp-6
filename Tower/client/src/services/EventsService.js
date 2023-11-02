@@ -32,11 +32,12 @@ async getEventById(eventId) {
 
 
 async createEvent(eventData) {
-  
-  logger.log(eventData.date)
-  // const res = await api.post('api/events', eventData)
-  // const event = new TowerEvent(res.data)
-  // return event
+ eventData.startDate = new Date(eventData.startDate).toUTCString()
+  // logger.log(eventData.date)
+  const res = await api.post('api/events', eventData)
+  logger.log('[EventsService] createEvent(), res.data', res.data)
+  const event = new TowerEvent(res.data)
+  return event
 }
 
 

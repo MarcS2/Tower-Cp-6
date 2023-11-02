@@ -28,7 +28,7 @@
   <label class="ms-2" for="floatingPassword">Capacity</label>
 </div>
 <div class="col-12 form-floating mb-3">
-  <input v-model="editable.date" type="date" class="form-control" id="floatingPassword" placeholder="Location" required>
+  <input v-model="editable.startDate" type="date" class="form-control" id="floatingPassword" placeholder="Location" required>
   <label class="ms-2" for="floatingPassword">Date</label>
 </div>
 <!-- <div class="col-12 form-floating mb-3">
