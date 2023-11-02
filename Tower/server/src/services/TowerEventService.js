@@ -2,6 +2,22 @@ import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class TowerEventService {
+  async editEvent(eventData, userId, eventId) {
+    const event = await this.getTowerEventById(eventId)
+    if (event.creatorId != userId) {
+      throw new Forbidden('This is not your event')
+    }
+    if (!event) {
+      throw new BadRequest(`${eventId} is not a valid id`)
+    }
+
+    event.name = eventData.name || event.name
+    event.description = eventData.description || event.description
+    await event.save()
+    return event
+  }
+
+
   async cancelEvent(eventId, userId) {
     const towerEvent = await this.getTowerEventById(eventId)
     if (towerEvent.creatorId.toString() != userId) {
