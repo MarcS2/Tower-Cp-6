@@ -21,6 +21,7 @@
 
 <script>
 import { computed, onMounted } from "vue";
+
 import Pop from "../utils/Pop";
 import {eventsService} from "../services/EventsService"
 import { AppState } from "../AppState";

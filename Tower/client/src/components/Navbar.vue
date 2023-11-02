@@ -17,19 +17,28 @@
           </router-link>
         </li>
       </ul>
+      <button v-if="account" class="btn btn-outline-dark text-light me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Event</button>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
   </nav>
+
+  <FormModal/>
 </template>
 
 <script>
+import { computed, } from "vue";
+
+import { AppState } from "../AppState";
 import Login from './Login.vue';
+import FormModal from "./FormModal.vue";
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account.id)
+    }
   },
-  components: { Login }
+  components: { Login, FormModal }
 }
 </script>
 
