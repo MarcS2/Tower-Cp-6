@@ -23,6 +23,9 @@
   <div class="col-12">
     <h4>{{ activeEvent.description }}</h4>
   </div>
+  <div class="col-12">
+    <h4>{{ activeEvent.capacity}}</h4>
+  </div>
 </section>
       </div>
     </section>
@@ -38,12 +41,25 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { useRoute } from "vue-router";
 import { eventsService } from "../services/EventsService";
+import Pop from "../utils/Pop";
 export default {
   
   setup(){
     const route = useRoute()
+async function getProfilesWithEventTicket() {
+  try {
+    const eventId = route.params.eventId
+      await eventsService.getProfilesWithEventTicket(eventId);
+  }
+  catch (error) {
+      Pop.error(error);
+  }
+}
+    
     onMounted(() =>{
-eventsService.getEventById(route.params.eventId)
+getProfilesWithEventTicket()
+
+    eventsService.getEventById(route.params.eventId)
     })
   return { 
     activeEvent: computed(() => AppState.activeEvent)
