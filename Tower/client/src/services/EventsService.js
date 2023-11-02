@@ -7,7 +7,7 @@ class EventsService {
 async getProfilesWithEventTicket(eventId) {
   const res = await api.get(`api/events/${eventId}/tickets`)
   logger.log('[EventsService] getProfilesWithEventTicket(), Profiles with tickets', res.data)
-
+AppState.activeEvent
 }
 
 
