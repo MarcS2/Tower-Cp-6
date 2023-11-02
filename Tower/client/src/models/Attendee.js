@@ -5,6 +5,7 @@ export class Attendee {
   this.createdAt = data.createdAt
   this.updatedAt = data.updatedAt
   this.profile = data.profile 
+  this.event = data.event
   
  } 
 }

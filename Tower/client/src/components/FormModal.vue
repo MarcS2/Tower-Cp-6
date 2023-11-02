@@ -29,11 +29,11 @@
 </div>
 <div class="col-12 form-floating mb-3">
   <input v-model="editable.startDate" type="date" class="form-control" id="floatingPassword" placeholder="Location" required>
-  <label class="ms-2" for="floatingPassword">Date</label>
+  <label class="ms-2" for="floatingPassword">Start Date</label>
 </div>
 <!-- <div class="col-12 form-floating mb-3">
-  <input v-model="editable.time" type="time" class="form-control" id="floatingPassword" placeholder="Location" required>
-  <label class="ms-2" for="floatingPassword">Time</label>
+  <input v-model="editable.startTime" type="time" class="form-control" id="floatingPassword" placeholder="Location" required>
+  <label class="ms-2" for="floatingPassword">Start Time</label>
 </div> -->
 <div class=" col-12 form-floating mb-3">
   <select v-model="editable.type" class="form-select bg-white" id="floatingSelect" aria-label="Floating label select example">
@@ -88,9 +88,8 @@ try {
   const eventData = editable.value
   const event = await eventsService.createEvent(eventData)
   editable.value = {}
-  event
-  // Modal.getOrCreateInstance('#exampleModal').hide()
-  // router.push({name: "Event", params: {eventId: event.id}})
+  Modal.getOrCreateInstance('#exampleModal').hide()
+  router.push({name: "EventDetails", params: {eventId: event.id}})
 } catch (error) {
   Pop.error(error)
 }

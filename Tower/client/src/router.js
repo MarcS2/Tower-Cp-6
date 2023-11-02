@@ -23,6 +23,12 @@ const routes = [
     beforeEnter: authGuard
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: loadPage('ProfilePage'),
+    beforeEnter: authGuard
+  },
+  {
     path: '/event/:eventId',
     name: 'EventDetails',
     component: loadPage('EventDetailsPage'),

@@ -5,6 +5,23 @@ import { TowerEvent } from "../models/TowerEvent"
 import { Attendee } from "../models/Attendee"
 class EventsService {
 
+
+  // getMyEvents() {
+  // const myEvents = AppState.towerEvent.filter(event => event.creatorId == AppState.account.id)
+  // logger.log('found events', myEvents)
+  // AppState.towerEvent = myEvents.map(event => new TowerEvent(event))
+  // logger.log('found events in appstate', AppState.towerEvent)
+  // }
+
+
+
+async cancelEvent(eventId) {
+  const res = await api.delete(`api/events/${eventId}`)
+  return res.data
+}
+
+
+
 async getProfilesWithEventTicket(eventId) {
   AppState.attendee = []
   const res = await api.get(`api/events/${eventId}/tickets`)
@@ -16,6 +33,7 @@ logger.log('[AppState] getProfilesWithEventTicket(), Attendee in AppState', AppS
 
 
 async getEvents() {
+  AppState.towerEvent = []
   const res = await api.get('api/events')
   logger.log('[EventsService] getEvents(), got events', res.data)
   const newEvent = res.data.map(eventPojo => new TowerEvent(eventPojo))
@@ -33,11 +51,11 @@ async getEventById(eventId) {
 
 async createEvent(eventData) {
  eventData.startDate = new Date(eventData.startDate).toUTCString()
-  // logger.log(eventData.date)
   const res = await api.post('api/events', eventData)
   logger.log('[EventsService] createEvent(), res.data', res.data)
   const event = new TowerEvent(res.data)
-  return event
+  logger.log('new event ',event )
+  return res.data
 }
 
 

@@ -18,6 +18,11 @@
                 Manage Account
               </div>
             </router-link>
+            <router-link :to="{ name: 'Profile' }">
+              <div class="list-group-item dropdown-item list-group-item-action">
+                My Profile
+              </div>
+            </router-link>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
               <i class="mdi mdi-logout"></i>
               logout

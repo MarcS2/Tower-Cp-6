@@ -1,10 +1,12 @@
 <template>
   <div v-if="activeEvent" class="container-fluid">
-<section class="row">
-  <div class="col-12 mt-3">
-    <section class="row">
+<section class="row justify-content-center">
+  
+  <div class="col-11  mt-3 p-4 border border-dark shadow">
+    <section class="row  ">
       <div class="col-12 col-md-4">
-        <img class="img-fluid" :src="activeEvent?.coverImg" alt="Event cover image">
+        <img class="img-fluid rounded shadow" :src="activeEvent?.coverImg" alt="Event cover image">
+        
       </div>
       <div class="col-12 col-md-8 ">
 <section class="row">
@@ -14,22 +16,33 @@
   <div class="col-6 text-end">
     <h2>{{ activeEvent.startDate.toDateString() }}</h2>
   </div>
-  <div class="col-6 ">
+  <div class="col-12 ">
     <h2>{{ activeEvent.location }}</h2>
   </div>
-  <div class="col-6 text-end">
+  <!-- <div class="col-6 text-end">
     <h3>{{ activeEvent.startDate.toLocaleTimeString() }}</h3>
-  </div>
+  </div> -->
   <div class="col-12">
     <h4>{{ activeEvent.description }}</h4>
   </div>
   
-  <div class="col-6 mt-3">
+  <div v-if="!activeEvent.isCanceled" class="col-6 mt-3">
     <h4>{{ activeEvent.capacity - attendeeCount}} Tickets Left</h4>
+  </div>
+  <div v-else-if="activeEvent.isCanceled" class="col-12 mt-3">
+    <p class="text-center fs-4 text-danger">Sorry this event has been canceled.</p>
+  </div>
+  
+  <div v-if="account" class="col-6 text-end mt-3">
+    <button :disabled="isAttendee || activeEvent.capacity - attendeeCount == 0" :hidden="activeEvent.isCanceled" @click="getTicket()" class="btn btn-outline-dark">Get Ticket</button>
+    <p v-if="isAttendee" class="mt-2">You are attending this event.</p>
+  </div>
+  <div v-if="activeEvent.capacity - attendeeCount == 0" class="col-12 text-center">
+    <h5 class="text-danger"> Sorry out of tickets</h5>
     
   </div>
-  <div v-if="account" class="col-6 text-end mt-3">
-<button :disabled="isAttendee" @click="getTicket()" class="btn btn-outline-dark">Get Ticket</button>
+  <div v-if="account == activeEvent.creatorId"  class="col-12 mt-2 text-end">
+    <button @click="cancelEvent()" class="btn btn-outline-danger">Cancel Event</button>
   </div>
 </section>
       </div>
@@ -55,13 +68,14 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { eventsService } from "../services/EventsService";
 import Pop from "../utils/Pop";
 import { attendeeService } from "../services/AttendeeService"
 export default {
   
   setup(){
+    const router = useRouter()
     const route = useRoute()
 async function getProfilesWithEventTicket() {
   try {
@@ -86,6 +100,9 @@ getProfilesWithEventTicket()
       AppState.attendee.find((attendee) => attendee.accountId == AppState.account.id)
     ),
     attendeeCount: computed(() => AppState.attendee.length),
+
+
+
    async getTicket() {
      try {
       
@@ -95,7 +112,24 @@ getProfilesWithEventTicket()
       } catch (error) {
         Pop.error(error)
       }
+    },
+
+
+    async cancelEvent() {
+      try {
+        const wantTo = await Pop.confirm('Would you like to cancel the event?')
+        if(!wantTo) {
+          return
+        }
+        const eventId = route.params.eventId
+        await eventsService.cancelEvent(eventId)
+        router.push({path: '/'})
+      } catch (error) {
+        Pop.error(error)
+      }
     }
+
+
    }
   }
 };
@@ -103,7 +137,11 @@ getProfilesWithEventTicket()
 
 
 <style lang="scss" scoped>
+
+
+
 .img-pfp {
+  
   height: 3rem;
 }
 </style>
