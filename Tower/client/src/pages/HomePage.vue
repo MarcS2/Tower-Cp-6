@@ -21,7 +21,7 @@
     </section>
     <!-- SECTION Events -->
     <section class="row">
-      <div v-for="eventData in towerEvents" :key="eventData.eventId" class="col-3">
+      <div v-for="eventData in towerEvents" :key="eventData.eventId" class="col-12 col-md-3">
         <EventCard :event="eventData" />
 
       </div>
