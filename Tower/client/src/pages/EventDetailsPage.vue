@@ -59,9 +59,14 @@
     </div>
   </div>
 </section>
-<section class="row justify-content-center p-2">
-  <div v-for="comment in comments" :key="comment.id" class="col-9">
-<CommentCard :commentData="comment" />
+<section class="row justify-content-center p-2  ">
+  <div class="col-10 comment-bg">
+    <section class="row justify-content-center p-2">
+      <div v-for="comment in comments" :key="comment.id" class="col-9">
+    <CommentCard :commentData="comment" />
+      </div>
+      
+    </section>
   </div>
 </section>
   </div>
@@ -157,5 +162,10 @@ getComments()
 .img-pfp {
   
   height: 3rem;
+}
+
+
+.comment-bg {
+  background-color: rgba(145, 130, 130, 0.67);
 }
 </style>

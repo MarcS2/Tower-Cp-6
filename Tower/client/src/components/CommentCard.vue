@@ -1,6 +1,15 @@
 <template>
-  <section class="row">
-    {{ commentData }}
+  <section class="row bg-light border border-dark shadow p-3 justify-content-center">
+    <div class="col-12">
+      <img class="rounded-circle img-pfp " :src="commentData.creator.picture " alt="Comment creator image">
+      <p class=" ms-2 mt-1 d-inline">
+        {{ commentData.creator.name }}
+      </p>
+      
+    </div>
+    <div class="col-10">
+      {{ commentData.description }}
+    </div>
   </section>
 </template>
 
@@ -19,5 +28,8 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.img-pfp {
+  
+  height: 3rem;
+}
 </style>
