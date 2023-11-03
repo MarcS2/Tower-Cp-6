@@ -10,7 +10,7 @@
     <div class="col-10">
       {{ commentData.description }}
     </div>
-    <div v-if="activeEvent.creatorId == account" class="col-12 text-end">
+    <div v-if="activeEvent.creatorId == account || commentData.creatorId == account" class="col-12 text-end">
       <button>Delete Comment</button>
     </div>
   </section>

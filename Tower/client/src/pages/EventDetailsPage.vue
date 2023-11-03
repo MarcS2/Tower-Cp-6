@@ -59,8 +59,8 @@
     </div>
   </div>
 </section>
-<section class="row justify-content-center p-2  ">
-  <div class="col-10 comment-bg">
+<section  class="row justify-content-center p-2  ">
+  <div v-if="isComments" class="col-10 comment-bg">
     <section class="row justify-content-center p-2">
       <div v-for="comment in comments" :key="comment.id" class="col-9">
     <CommentCard :commentData="comment" />
@@ -118,6 +118,13 @@ getComments()
       AppState.attendee.find((attendee) => attendee.accountId == AppState.account.id)
     ),
     comments: computed(() => AppState.comments),
+    isComments: computed(() => {
+      if(AppState.comments.length == 0) {
+        return false
+      } else {
+        return true
+      }
+    }),
     attendeeCount: computed(() => AppState.attendee.length),
 
 
