@@ -1,14 +1,17 @@
 import { dbContext } from "../db/DbContext.js"
-import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { BadRequest, Forbidden, UnAuthorized } from "../utils/Errors.js"
 
 class TowerEventService {
   async editEvent(eventData, userId, eventId) {
     const event = await this.getTowerEventById(eventId)
+    if (!event) {
+      throw new BadRequest(`${eventId} is not a valid id`)
+    }
     if (event.creatorId != userId) {
       throw new Forbidden('This is not your event')
     }
-    if (!event) {
-      throw new BadRequest(`${eventId} is not a valid id`)
+    if (event.isCanceled) {
+      throw new BadRequest('This event is canceled')
     }
 
     event.name = eventData.name || event.name
