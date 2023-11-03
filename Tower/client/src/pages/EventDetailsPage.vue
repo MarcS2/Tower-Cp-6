@@ -49,8 +49,8 @@
     </section>
   </div>
 </section>
-<section class="row mt-3">
-  <div  class="col-12">
+<section class="row mt-3 justify-content-center">
+  <div  class="col-10 border border-dark shadow p-3">
     <div class="d-inline me-2" v-for="attendee in attendee" :key="attendee.id">
       <p class="d-inline">
         {{ attendee.profile.name }}
@@ -59,6 +59,11 @@
       <img class="rounded-circle img-pfp ms-1" :src="attendee.profile.picture" alt="profile picture">
 
     </div>
+  </div>
+</section>
+<section class="row">
+  <div class="col-9">
+
   </div>
 </section>
   </div>
@@ -86,10 +91,19 @@ async function getProfilesWithEventTicket() {
       Pop.error(error);
   }
 }
+
+async function getComments() {
+  try {
+    const eventId = route.params.eventId
+    await 
+  } catch (error) {
+    Pop.error(error)
+  }
+}
     
     onMounted(() =>{
 getProfilesWithEventTicket()
-
+getComments()
     eventsService.getEventById(route.params.eventId)
     })
   return { 
