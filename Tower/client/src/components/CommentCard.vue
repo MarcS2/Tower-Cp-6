@@ -18,8 +18,12 @@
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { UserComment } from "../models/Comment";
+import { TowerEvent } from "../models/TowerEvent";
 export default {
-  props: {commentData: {type: UserComment, required: true}},
+  props: {
+    commentData: {type: UserComment, required: true},
+    activeEvent: {type: TowerEvent, required: true}
+  },
   setup(){
   return {  }
   }
