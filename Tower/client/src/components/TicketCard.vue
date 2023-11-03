@@ -42,6 +42,10 @@ export default {
   return { 
    async destroyTicket(ticketId) {
       try {
+        const wantTo = await Pop.confirm('Would you like to un-attend this event ?')
+        if(!wantTo) {
+          return
+        }
         await attendeeService.destroyTicket(ticketId)
       } catch (error) {
         Pop.error(error)

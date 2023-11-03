@@ -20,7 +20,7 @@
             </router-link>
             <router-link :to="{ name: 'Profile' }">
               <div class="list-group-item dropdown-item list-group-item-action">
-                My Profile
+                My Account Page
               </div>
             </router-link>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">

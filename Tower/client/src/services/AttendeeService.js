@@ -6,7 +6,9 @@ class AttendeeService {
 
 async destroyTicket(ticketId) {
   const res = await api.delete(`api/tickets/${ticketId}`)
-  
+  const ticketIndex = AppState.attendee.findIndex(ticket => ticket.id == ticketId)
+    AppState.attendee.splice(ticketIndex, 1)
+    
 }
 
 
