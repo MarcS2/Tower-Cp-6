@@ -19,9 +19,7 @@
   <div class="col-12 ">
     <h2>{{ activeEvent.location }}</h2>
   </div>
-  <!-- <div class="col-6 text-end">
-    <h3>{{ activeEvent.startDate.toLocaleTimeString() }}</h3>
-  </div> -->
+
   <div class="col-12">
     <h4>{{ activeEvent.description }}</h4>
   </div>
@@ -35,7 +33,7 @@
   
   <div v-if="account" class="col-6 text-end mt-3">
     <button :disabled="isAttendee || activeEvent.capacity - attendeeCount == 0" :hidden="activeEvent.isCanceled" @click="getTicket()" class="btn btn-outline-dark">Get Ticket</button>
-    <p v-if="isAttendee" class="mt-2">You are attending this event.</p>
+    <p v-if="isAttendee && !activeEvent.isCanceled" class="mt-2">You are attending this event.</p>
   </div>
   <div v-if="activeEvent.capacity - attendeeCount == 0" class="col-12 text-center">
     <h5 class="text-danger"> Sorry out of tickets</h5>
@@ -92,18 +90,18 @@ async function getProfilesWithEventTicket() {
   }
 }
 
-async function getComments() {
-  try {
-    const eventId = route.params.eventId
-    await 
-  } catch (error) {
-    Pop.error(error)
-  }
-}
+// async function getComments() {
+//   try {
+//     const eventId = route.params.eventId
+//     await 
+//   } catch (error) {
+//     Pop.error(error)
+//   }
+// }
     
     onMounted(() =>{
 getProfilesWithEventTicket()
-getComments()
+// getComments()
     eventsService.getEventById(route.params.eventId)
     })
   return { 
