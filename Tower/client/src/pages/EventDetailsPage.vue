@@ -48,7 +48,7 @@
   </div>
 </section>
 <section class="row mt-3 justify-content-center">
-  <div  class="col-10 border border-dark shadow p-3">
+  <div v-if="activeEvent.ticketCount > 0" class="col-10 border border-dark shadow p-3">
     <div class="d-inline me-2" v-for="attendee in attendee" :key="attendee.id">
       <p class="d-inline">
         {{ attendee.profile.name }}
@@ -59,9 +59,9 @@
     </div>
   </div>
 </section>
-<section class="row">
-  <div class="col-9">
-
+<section class="row justify-content-center p-2">
+  <div v-for="comment in comments" :key="comment.id" class="col-9">
+<CommentCard :commentData="comment" />
   </div>
 </section>
   </div>
@@ -75,6 +75,7 @@ import { useRoute, useRouter } from "vue-router";
 import { eventsService } from "../services/EventsService";
 import Pop from "../utils/Pop";
 import { attendeeService } from "../services/AttendeeService"
+import { commentsService } from "../services/CommentsService";
 export default {
   
   setup(){
@@ -90,18 +91,18 @@ async function getProfilesWithEventTicket() {
   }
 }
 
-// async function getComments() {
-//   try {
-//     const eventId = route.params.eventId
-//     await 
-//   } catch (error) {
-//     Pop.error(error)
-//   }
-// }
+async function getComments() {
+  try {
+    const eventId = route.params.eventId
+    await commentsService.getComments(eventId)
+  } catch (error) {
+    Pop.error(error)
+  }
+}
     
     onMounted(() =>{
 getProfilesWithEventTicket()
-// getComments()
+getComments()
     eventsService.getEventById(route.params.eventId)
     })
   return { 
@@ -111,6 +112,7 @@ getProfilesWithEventTicket()
     isAttendee: computed(() => 
       AppState.attendee.find((attendee) => attendee.accountId == AppState.account.id)
     ),
+    comments: computed(() => AppState.comments),
     attendeeCount: computed(() => AppState.attendee.length),
 
 

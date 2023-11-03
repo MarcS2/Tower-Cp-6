@@ -12,5 +12,8 @@ export const AppState = reactive({
   activeEvent: null,
   /** @type {import('./models/Attendee.js').Attendee} */
   
-attendee: []
+  attendee: [],
+  
+  /** @type {import('./models/Comment.js').UserComment} */
+comments: [],
 })
