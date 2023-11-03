@@ -10,6 +10,9 @@
     <div class="col-10">
       {{ commentData.description }}
     </div>
+    <div v-if="activeEvent.creatorId == account" class="col-12 text-end">
+      <button>Delete Comment</button>
+    </div>
   </section>
 </template>
 
@@ -22,10 +25,13 @@ import { TowerEvent } from "../models/TowerEvent";
 export default {
   props: {
     commentData: {type: UserComment, required: true},
-    activeEvent: {type: TowerEvent, required: true}
+    // activeEvent: {type: TowerEvent, required: true}
   },
   setup(){
-  return {  }
+  return { 
+    activeEvent: computed(() => AppState.activeEvent),
+    account: computed(() => AppState.account.id)
+   }
   }
 };
 </script>
