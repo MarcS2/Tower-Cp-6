@@ -2,7 +2,7 @@
   <section class="row mt-3">
   <div class="col-12">
     <router-link :to="{name: 'EventDetails', params:{eventId: event.eventId}}">
-    <img class="img-fluid" :src="event.coverImg" alt="Event Cover Image">
+    <img class="img-fluid cover-img" :src="event.coverImg" alt="Event Cover Image">
     </router-link>
     <div v-if="event.isCanceled" class="text-center bg-danger">
           <p>Canceled</p>
@@ -32,5 +32,12 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.cover-img {
+  height: 35dvh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 </style>

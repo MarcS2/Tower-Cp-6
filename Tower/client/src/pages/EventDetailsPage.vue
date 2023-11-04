@@ -5,7 +5,7 @@
   <div class="col-11  mt-3 p-4 border border-dark shadow">
     <section class="row  ">
       <div class="col-12 col-md-4">
-        <img class="img-fluid rounded shadow" :src="activeEvent?.coverImg" alt="Event cover image">
+        <img class="img-fluid rounded shadow cover-img" :src="activeEvent?.coverImg" alt="Event cover image">
         
       </div>
       <div class="col-12 col-md-8 ">
@@ -60,9 +60,24 @@
   </div>
 </section>
 <section  class="row justify-content-center p-2  ">
-  <div v-if="isComments" class="col-10 comment-bg">
-    <section class="row justify-content-center p-2">
-      <div v-for="comment in comments" :key="comment.id" class="col-9">
+  
+  <div  class="col-10 comment-bg rounded">
+    <!-- SECTION create comment form -->
+    <section class="row justify-content-center">
+<div v-if="account" class="col-11 mt-3">
+  <form @submit.prevent="createComment()" class="row">
+    <div class=" col-12 form-floating">
+    <textarea v-model="editable.body" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+    <label for="floatingTextarea2" class="ms-2">Comments</label>
+</div>
+<div class="col-12 text-end mt-2">
+  <button class="btn btn-outline-dark me-4 mb-2" type="submit">Post Comment</button>
+</div>
+  </form>
+</div>
+    </section>
+    <section v-if="isComments" class="row justify-content-center p-2">
+      <div v-for="comment in comments" :key="comment.id" class="col-9 mt-2">
     <CommentCard :commentData="comment" />
       </div>
       
@@ -81,11 +96,13 @@ import { eventsService } from "../services/EventsService";
 import Pop from "../utils/Pop";
 import { attendeeService } from "../services/AttendeeService"
 import { commentsService } from "../services/CommentsService";
+import { ref } from "vue";
 export default {
   
   setup(){
     const router = useRouter()
     const route = useRoute()
+    const editable = ref({})
 async function getProfilesWithEventTicket() {
   try {
     const eventId = route.params.eventId
@@ -111,6 +128,8 @@ getComments()
     eventsService.getEventById(route.params.eventId)
     })
   return { 
+    getProfilesWithEventTicket,
+    editable,
     attendee: computed(() => AppState.attendee),
     account: computed(() => AppState.account.id),
     activeEvent: computed(() => AppState.activeEvent),
@@ -134,6 +153,7 @@ getComments()
       
         const eventId = route.params.eventId
         await attendeeService.getTicket(eventId)
+        this.getProfilesWithEventTicket()
         Pop.success('You got a ticket ')
       } catch (error) {
         Pop.error(error)
@@ -153,6 +173,20 @@ getComments()
       } catch (error) {
         Pop.error(error)
       }
+    },
+
+
+
+    async createComment() {
+      try {
+        const eventId = route.params.eventId
+        const commentData = editable.value
+        commentData.eventId = eventId
+        await commentsService.createComment(commentData)
+        editable.value = {}
+      } catch (error) {
+        Pop.error(error)
+      }
     }
 
 
@@ -169,6 +203,13 @@ getComments()
 .img-pfp {
   
   height: 3rem;
+}
+
+.cover-img {
+  height: 35dvh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 

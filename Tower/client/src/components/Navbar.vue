@@ -1,14 +1,20 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark nav-bg px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+        <!-- <img alt="logo" src="../assets/img/cw-logo.png" height="45" /> -->
+        <div >
+          <i class=" fs-1 mt-3 mdi mdi-chess-rook"></i>
+          <p class="d-inline">Tower</p>
+        </div>
+
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <!-- <li>
@@ -22,7 +28,7 @@
       <Login />
     </div>
   </nav>
-
+  
   <FormModal/>
 </template>
 
@@ -47,6 +53,10 @@ a:hover {
   text-decoration: none;
 }
 
+.nav-bg {
+background-color: rgba(20, 20, 100, 0.562);
+}
+
 .nav-link {
   text-transform: uppercase;
 }
@@ -57,9 +67,24 @@ a:hover {
   border-bottom-right-radius: 0;
 }
 
+.filter-btn {
+  display: none;
+}
+
+
 @media screen and (min-width: 768px) {
   nav {
     height: 64px;
   }
+
+}
+
+
+@media screen and (max-width: 600px) {
+  
+  .filter-btn {
+    display: block;
+  }
+  
 }
 </style>

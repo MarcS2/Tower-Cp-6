@@ -23,7 +23,8 @@ async destroyTicket(ticketId) {
     AppState.attendee = []
     const res = await api.get('account/tickets') 
     logger.log('got my tickets, res.data', res.data)
-    AppState.attendee = res.data.map(attendee => new Attendee(attendee))
+    const tickets = res.data.reverse()
+    AppState.attendee = tickets.map(attendee => new Attendee(attendee))
   }
 }
 

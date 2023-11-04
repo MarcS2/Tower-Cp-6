@@ -11,7 +11,7 @@
       {{ commentData.description }}
     </div>
     <div v-if="activeEvent.creatorId == account || commentData.creatorId == account" class="col-12 text-end">
-      <button>Delete Comment</button>
+      <button @click="destroyComment(commentData.id)" class="btn btn-outline-danger">Delete Comment</button>
     </div>
   </section>
 </template>
@@ -22,6 +22,9 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { UserComment } from "../models/Comment";
 import { TowerEvent } from "../models/TowerEvent";
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
+import { commentsService } from "../services/CommentsService";
 export default {
   props: {
     commentData: {type: UserComment, required: true},
@@ -30,7 +33,21 @@ export default {
   setup(){
   return { 
     activeEvent: computed(() => AppState.activeEvent),
-    account: computed(() => AppState.account.id)
+    account: computed(() => AppState.account.id),
+
+
+    async destroyComment(commentId) {
+      try {
+        const wantTo = await Pop.confirm('Are you sure you want to delete this comment ?')
+        if(!wantTo) {
+          return
+        }
+        await commentsService.destroyComment(commentId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+
    }
   }
 };

@@ -6,8 +6,19 @@
     <!-- !SECTION -->
     <!-- SECTION filters -->
     <section class="row">
-<div class="col-12 mt-4">
-  <div class="p-3 d-flex justify-content-around rounded-pill bg-secondary">
+      <div class=" mt-3 col-12 filter-hide">
+        <label for="floatingSelect">Filter</label>
+        <select v-model="filteredType" class="form-select bg-white" id="floatingSelect" aria-label="Floating label select example">
+    <option selected>Types</option>
+    <option value="">All</option>
+    <option :value="type" v-for="type in types" :key="type" >
+    {{ type }}
+  </option>
+    
+  </select>
+      </div>
+<div class="hide-screen col-12 mt-4 ">
+  <div class="  p-3 d-flex justify-content-around rounded-pill bg-secondary">
     <button class="btn btn-outline-dark" @click="changeType('')">
       All
     </button>
@@ -18,6 +29,7 @@
 
   </div>
 </div>
+
     </section>
     <!-- SECTION Events -->
     <section class="row">
@@ -78,5 +90,26 @@ filteredType.value = type
 </script>
 
 <style scoped lang="scss">
+
+.hide-screen {
+  display: show;
+}
+
+.filter-hide {
+  display: none;
+}
+
+
+@media screen and (max-width: 600px) {
+  .hide-screen {
+    display: none;
+  }
+
+
+  .filter-hide {
+    display: block;
+  }
+}
+
 
 </style>
