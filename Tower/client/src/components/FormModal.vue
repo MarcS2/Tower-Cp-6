@@ -12,7 +12,7 @@
         
         <form @submit.prevent="createEvent()" class="row ">
           <div class=" col-12 form-floating mb-3">
-  <input v-model="editable.name" type="text" class="form-control" id="floatingInput" placeholder="name@example.com " maxlength="50">
+  <input  v-model="editable.name" type="text" class="form-control" id="floatingInput" placeholder="name@example.com " maxlength="50" required>
   <label class="ms-2" for="floatingInput">Name</label>
 </div>
           <div class=" col-12 form-floating mb-3">
@@ -20,7 +20,7 @@
   <label class="ms-2" for="floatingInput">Cover Image Url</label>
 </div>
 <div class="col-12 form-floating mb-3">
-  <input v-model="editable.location" type="text" class="form-control" id="floatingPassword" placeholder="Location" maxlength="100">
+  <input  v-model="editable.location" type="text" class="form-control" id="floatingPassword" placeholder="Location" maxlength="100" required>
   <label class="ms-2" for="floatingPassword">Location</label>
 </div>
 <div class="col-12 form-floating mb-3">
@@ -31,12 +31,9 @@
   <input v-model="editable.startDate" type="date" class="form-control" id="floatingPassword" placeholder="Location" required>
   <label class="ms-2" for="floatingPassword">Start Date</label>
 </div>
-<!-- <div class="col-12 form-floating mb-3">
-  <input v-model="editable.startTime" type="time" class="form-control" id="floatingPassword" placeholder="Location" required>
-  <label class="ms-2" for="floatingPassword">Start Time</label>
-</div> -->
+
 <div class=" col-12 form-floating mb-3">
-  <select v-model="editable.type" class="form-select bg-white" id="floatingSelect" aria-label="Floating label select example">
+  <select v-model="editable.type" class="form-select bg-white" id="floatingSelect" aria-label="Floating label select example" required>
     <option selected>Type</option>
     <option 
     :value="type"
@@ -53,7 +50,7 @@
   <label class="ms-2" for="floatingTextarea2">Description</label>
 </div>
 <div class="col-12 text-end">
-  <button type="submit" class="btn btn-outline-dark">Submit</button>
+  <button :disabled="editable.name == null || editable.location == null || editable.capacity == null || editable.startDate == null || editable.type == null" type="submit" class="btn btn-outline-dark">Submit</button>
 </div>
 </form>
       </div>

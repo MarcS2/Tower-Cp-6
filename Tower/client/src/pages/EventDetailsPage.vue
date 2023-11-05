@@ -39,8 +39,11 @@
     <h5 class="text-danger"> Sorry out of tickets</h5>
     
   </div>
-  <div v-if="account == activeEvent.creatorId"  class="col-12 mt-2 text-end">
+  <div v-if="account == activeEvent.creatorId && activeEvent.isCanceled == false"  class="col-12 mt-2 text-end">
     <button @click="cancelEvent()" class="btn btn-outline-danger">Cancel Event</button>
+  </div>
+  <div v-if="account == activeEvent.creatorId && activeEvent.isCanceled == true"  class="col-12 mt-2 text-end">
+    <button @click="cancelEvent()" class="btn btn-outline-danger">Un-cancel  Event</button>
   </div>
 </section>
       </div>
@@ -67,7 +70,7 @@
 <div v-if="account" class="col-11 mt-3">
   <form @submit.prevent="createComment()" class="row">
     <div class=" col-12 form-floating">
-    <textarea v-model="editable.body" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+    <textarea v-model="editable.body" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
     <label for="floatingTextarea2" class="ms-2">Comments</label>
 </div>
 <div class="col-12 text-end mt-2">
@@ -153,7 +156,6 @@ getComments()
       
         const eventId = route.params.eventId
         await attendeeService.getTicket(eventId)
-        this.getProfilesWithEventTicket()
         Pop.success('You got a ticket ')
       } catch (error) {
         Pop.error(error)
